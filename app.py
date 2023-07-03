@@ -312,6 +312,7 @@ def pdf_to_jpg(szablon_filename):
 def data(img_filename):
     return render_template('data.html', title="Dane", css='index.css')
 
+app.config['UPLOAD_EXTENSIONS_DANE'] = ['.csv']
 
 @app.route('/data/<img_filename>', methods=['POST'])
 def send_data(img_filename):
