@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Certfikaty zostały wysłane!</h1>
+    <p>Certyfikaty ukończenia szkolenia: {{ nazwa }} zostały wysłane do uczestników</p>
+    <h3>Certyfikaty, które wystawiłeś</h3>
+    <ul>
+        {% for certyfikat in certificats %}
+            <li>
+                <p>{{certyfikat.filename}}</p>
+                <form method="POST" action="{{ url_for('view_certyfikat', image=certyfikat.filename) }}">
+                    <input type="submit" value="Zobacz">
+                </form>    
+                <form method="POST" action="{{ url_for('download_certyfikat', image=certyfikat.filename) }}">
+                    <input type="submit" value="Pobierz">
+                </form>                
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="{{ url_for('download_all') }}">
+        <input type="submit" value="Pobierz wszystkie certyfikaty">
+    </form>  
+    
+    <form method="GET" action="{{ url_for ('index') }}">
+        <input type="submit" value="Strona główna">
+    </form>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Prześlij szablony certyfikatów</h1>
+    <!-- <form method="POST">
+        <dl>
+            <dt>{ form.file.label }</dt>
+            <dd>{ form.file }</dd>
+            <dt>{ form.submit.label }</dt>
+            <dd>{ form.submit }</dd>
+          </dl>
+      </form> -->
+    <form method="POST" action="" enctype="multipart/form-data">
+        <input type="file" accept=".pdf" name="file" multiple> <!--multiple - można kilka plików na raz, ale chyba nie działa to multiple -->
+        <input type="submit" value="Prześlij">
+    </form>
+
+    <!-- <form method="POST" action="{{ url_for('login')}}">
+        <input type="submit" value="Zaloguj się">
+    </form> -->
+    <hr> <!--robi tą kreseczkę pod formularzem-->
+
+    <ul>
+        {% for file in files %}
+
+        <li>
+            <p>{{file.filename}}</p> <!--dla app.py - normalne zapisywanie na kompie: file i tu poniżej też file, a dla app2 file.filenames-->
+            <form method="POST" action="{{ url_for('view_file', szablon_filename=file.filename) }}">
+                <input type="submit" value="Zobacz">
+            </form>
+
+            <!-- to dla app -->
+            <form method="GET" action="{{ url_for('pdf_to_jpg', szablon_filename=file.filename) }}"> <!--dla app.py szablon_filename=file-->
+                <input type="submit" value="Stwórz certyfikaty">
+            </form>  
+
+            <!-- to dla app1 -->
+            <!-- <form method="GET" action="{ url_for('dane', szablon_filename=file, img_filename=img_filename) }">
+                <input type="submit" value="Stwórz certyfikaty">
+            </form>   -->
+        </li>
+
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+

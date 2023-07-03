@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Prześlij plik z danymi</h3>
+    <p>Dla każdego uczestnika szkolenia:</p>
+    <p>w pierwszej kolumnie wpisz nazwę szkolenia</p>
+    <p>w drugiej kolumnie - datę szkolenia</p>
+    <p>w trzeciej kolumnie - imię uczestnika</p>
+    <p>w czwartej kolumnie - nazwisko uczestnika</p>
+    <p>w piątej kolumnie - adres e-mail uczestnika</p>
+    <p>w szóstej kolumnie - podpis ogranizatora szkolenia</p>
+
+    <!-- nie wiem czemu obrazek nie działa mimo że ścieżka dobra -->
+    <!-- <img src="http://www.telekarma.pl/userfiles/images/aktualnosci/305464337-760x500.jpg"/> -->
+    <!-- <img src="../images/Zrzut ekranu 2023-03-19 152008.jpg"> -->
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        <input type="file" accept=".csv" name="data_file"><br>
+        <input type="submit" value="Stwórz certyfikaty z tymi danymi">
+    </form>
+    <!-- <hr> robi tą kreseczkę pod formularzem -->
+    <ul>
+        {% for data_file in data_files %}
+        <li>
+            <p>{{data_file}}</p>
+            <form method="POST" action="{{ url_for('send_data', data_file=data_file, img_filename = img_filename) }}">
+                <!-- <form method="POST" action="{{ url_for('pdf_to_jpg', data_filename=data_file, filename=filename) }}"></form> -->
+                <input type="submit" value="Stwórz certyfikaty z tymi danymi">
+            </form>             
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

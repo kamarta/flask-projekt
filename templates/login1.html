@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Zaloguj się</h1>
+    <form action="" method="post" novalidate> <!--action - co się stanie po wysłaniu tego formularza; novalidate - not apply validation to the fields in this form, bo to robi flask-->
+        {{ form.hidden_tag() }} <!--tworzy ukryte pole, które zaiwera token żeby chronić przed atakami - coś z tym secret key-->
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br> <!-- ten size to ile znaków może być -->
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}            
+        </p>
+        <!-- <p>{ form.remember_me() }} { form.remember_me.label }}</p> -->
+        <p>{{ form.submit() }}</p>
+    </form>
+    <p>Nie masz jeszcze konta? <a href="{{ url_for('register') }}">Zrejestruj się</a></p>
+{% endblock %}
+
+<!-- All I needed to do was to include w dówch kalamerkach: form.<field_name>.label, where I wanted the field label, and w klamerkach: form.<field_name>(), where I wanted the field. -->

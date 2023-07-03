@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+      {% if title %} <!--control statement - condition-->
+      <title>{{ title }}</title> <!--placeholders for the dynamic content w tych podwójnych klamerkach-->
+      {% else %}
+      <title>Welcome!</title>
+      {% endif %}
+      {% if css %}
+      <link rel="stylesheet" type="text/css" href="../static/{{css}}">
+      {% endif %}
+    </head>
+    <body>
+      <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+      </nav>
+      <hr>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+        <!-- <div>aaa:<a href="/index">Home</a></div>
+        <hr> -->
+        {% block content %}{% endblock %} <!--inne html-e jak będą "dziedziczyć z tego to tu mogą wkładać różne rzeczy"-->
+    </body>
+</html>
+
+<!-- z index:
+<form method="POST" action="{ url_for('view_file', szablon_filename=file) }">
+  <input type="submit" value="Zobacz">
+</form>
+<form method='GET' action="{ url_for('pdf_to_jpg', szablon_filename=file) }">
+  <input type="submit" value="Stwórz certyfikaty">
+</form>   -->
